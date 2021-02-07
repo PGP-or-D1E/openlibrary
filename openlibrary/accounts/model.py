@@ -747,10 +747,7 @@ def audit_accounts(email, password, require_link=False,
             return {'error': 'accounts_not_connected'}
 
     if 'values' in ia_login:
-        s3_keys = {
-            'access': ia_login['values'].pop('access'),
-            'secret': ia_login['values'].pop('secret'),
-        }
+        s3_keys = {key: ia_login['values'].pop(key) for key in ('access', 'secret')}
         ol_account.save_s3_keys(s3_keys)
 
     # When a user logs in with OL credentials, the
